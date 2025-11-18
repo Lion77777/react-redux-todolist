@@ -1,17 +1,15 @@
 import './App.css'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { useReducer, useState } from 'react'
+import { useState } from 'react'
 import { CreateItemForm } from './CreateItemForm'
 import {
   changeTaskStatusAC,
   changeTaskTitleAC,
   createTaskAC, deleteTaskAC,
-  tasksReducer
 } from './model/tasks-reducer'
 import {
   changeTodolistFilterAC,
   changeTodolistTitleAC, createTodolistAC, deleteTodolistAC,
-  todolistsReducer
 } from './model/todolists-reducer'
 import { TodolistItem } from './TodolistItem'
 import AppBar from '@mui/material/AppBar'
@@ -25,8 +23,8 @@ import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
 import { containerSx } from './TodolistItem.styles'
 import { NavButton } from './NavButton'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from './app/store'
+import { useAppDispatch } from './common/hooks/useAppDispatch'
+import { useAppSelector } from './common/hooks/useAppSelector'
 
 export type Todolist = {
   id: string
@@ -47,10 +45,10 @@ export type TasksState = Record<string, Task[]>
 type ThemeMode = 'dark' | 'light'
 
 export const App = () => {
-  const todolists = useSelector<RootState, Todolist[]>(state => state.todolists)
-  const tasks = useSelector<RootState, TasksState>(state => state.tasks)
+  const todolists = useAppSelector(state => state.todolists)
+  const tasks = useAppSelector(state => state.tasks)
   const [themeMode, setThemeMode] = useState<ThemeMode>('light')
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const theme = createTheme({
     palette: {
