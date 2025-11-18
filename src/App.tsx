@@ -25,6 +25,8 @@ import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
 import {containerSx} from './TodolistItem.styles'
 import {NavButton} from './NavButton'
+import { useSelector } from 'react-redux'
+import { RootState } from './app/store'
 
 export type Todolist = {
   id: string
@@ -45,8 +47,8 @@ export type TasksState = Record<string, Task[]>
 type ThemeMode = 'dark' | 'light'
 
 export const App = () => {
-  const [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [])
-  const [tasks, dispatchToTasks] = useReducer(tasksReducer, {})
+  const todolists = useSelector<RootState, Todolist[]>(state => state.todolists)
+  const tasks = useSelector<RootState, TasksState>(state => state.tasks)
 
   const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
