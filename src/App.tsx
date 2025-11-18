@@ -25,6 +25,8 @@ import { containerSx } from './TodolistItem.styles'
 import { NavButton } from './NavButton'
 import { useAppDispatch } from './common/hooks/useAppDispatch'
 import { useAppSelector } from './common/hooks/useAppSelector'
+import { selectTodolists } from './model/todolists-selectors'
+import { selectTasks } from './model/tasks-selectors'
 
 export type Todolist = {
   id: string
@@ -45,8 +47,8 @@ export type TasksState = Record<string, Task[]>
 type ThemeMode = 'dark' | 'light'
 
 export const App = () => {
-  const todolists = useAppSelector(state => state.todolists)
-  const tasks = useAppSelector(state => state.tasks)
+  const todolists = useAppSelector(selectTodolists)
+  const tasks = useAppSelector(selectTasks)
   const [themeMode, setThemeMode] = useState<ThemeMode>('light')
   const dispatch = useAppDispatch()
 
