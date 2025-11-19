@@ -1,5 +1,5 @@
 import './App.css'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
 import { CreateItemForm } from './CreateItemForm'
 import {
   changeTaskStatusAC,
@@ -28,6 +28,7 @@ import { selectTodolists } from './model/todolists-selectors'
 import { selectTasks } from './model/tasks-selectors'
 import { changeThemeModeAC } from './app/app.reducer'
 import { selectThemeMode } from './app/app-selectors'
+import { getTheme } from './common/theme/theme'
 
 export type Todolist = {
   id: string
@@ -50,18 +51,10 @@ export const App = () => {
   const tasks = useAppSelector(selectTasks)
   const themeMode = useAppSelector(selectThemeMode)
   const dispatch = useAppDispatch()
-
-  const theme = createTheme({
-    palette: {
-      mode: themeMode,
-      primary: {
-        main: '#087EA4',
-      },
-    },
-  })
+  const theme = getTheme(themeMode)
 
   const changeMode = () => {
-    dispatch(changeThemeModeAC({themeMode: themeMode === 'light' ? 'dark' : 'light'}))
+    dispatch(changeThemeModeAC({ themeMode: themeMode === 'light' ? 'dark' : 'light' }))
   }
 
   const changeFilter = (todolistId: string, filter: FilterValues) => {
@@ -73,7 +66,7 @@ export const App = () => {
   }
 
   const deleteTodolist = (todolistId: string) => {
-    dispatch(deleteTodolistAC({id: todolistId}))
+    dispatch(deleteTodolistAC({ id: todolistId }))
   }
 
   const changeTodolistTitle = (todolistId: string, title: string) => {
