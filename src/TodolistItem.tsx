@@ -1,6 +1,9 @@
 import { TodolistTitle } from './TodolistTitle'
 import { Tasks } from './Tasks'
 import { FilterButtons } from './FilterButtons'
+import { useAppDispatch } from './common/hooks/useAppDispatch'
+import { createTaskAC } from './model/tasks-reducer'
+import { CreateItemForm } from './CreateItemForm'
 
 type Props = {
   todolist: Todolist
@@ -12,23 +15,21 @@ export type Todolist = {
   filter: FilterValues
 }
 
-export type Task = {
-  id: string
-  title: string
-  isDone: boolean
-}
-
 export type FilterValues = 'all' | 'active' | 'completed'
 
-export type TasksState = Record<string, Task[]>
+export const TodolistItem = ({ todolist }: Props) => {
+  const dispatch = useAppDispatch()
 
-export const TodolistItem = ({todolist}: Props) => {
-
+  const createTask = (title: string) => {
+    dispatch(createTaskAC({ todolistId: todolist.id, title }))
+  }
+  
   return (
     <div>
       <TodolistTitle todolist={todolist} />
+      <CreateItemForm onCreateItem={createTask} />
       <Tasks todolist={todolist} />
-      <FilterButtons todolist={todolist}/>
+      <FilterButtons todolist={todolist} />
     </div>
   )
 }
