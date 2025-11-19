@@ -6,7 +6,7 @@ import { appReducer } from "./app.reducer";
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer,
-    themes: appReducer
+    app: appReducer
 })
 
 export const store = configureStore({
