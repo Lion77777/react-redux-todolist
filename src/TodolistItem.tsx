@@ -13,7 +13,8 @@ import { useAppSelector } from './common/hooks/useAppSelector'
 import { selectTasks } from './model/tasks-selectors'
 import { useAppDispatch } from './common/hooks/useAppDispatch'
 import { changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC } from './model/tasks-reducer'
-import { changeTodolistFilterAC, changeTodolistTitleAC, deleteTodolistAC } from './model/todolists-reducer'
+import { changeTodolistFilterAC } from './model/todolists-reducer'
+import { TodolistTitle } from './TodolistTitle'
 
 type Props = {
   todolist: Todolist
@@ -37,7 +38,7 @@ export type TasksState = Record<string, Task[]>
 
 export const TodolistItem = (props: Props) => {
   const {
-    todolist: { id, title, filter },
+    todolist: { id, filter },
   } = props
 
   const tasks = useAppSelector(selectTasks)
@@ -46,14 +47,6 @@ export const TodolistItem = (props: Props) => {
 
   const changeFilter = (filter: FilterValues) => {
     dispatch(changeTodolistFilterAC({ id, filter }))
-  }
-
-  const deleteTodolist = () => {
-    dispatch(deleteTodolistAC({ id }))
-  }
-
-  const changeTodolistTitle = (title: string) => {
-    dispatch(changeTodolistTitleAC({ id, title }))
   }
 
   const createTask = (title: string) => {
@@ -72,14 +65,7 @@ export const TodolistItem = (props: Props) => {
 
   return (
     <div>
-      <div className={'container'}>
-        <h3>
-          <EditableSpan value={title} onChange={changeTodolistTitle} />
-        </h3>
-        <IconButton onClick={deleteTodolist}>
-          <DeleteIcon />
-        </IconButton>
-      </div>
+      <TodolistTitle todolist={props.todolist} />
       <CreateItemForm onCreateItem={createTask} />
       {filteredTasks.length === 0 ? (
         <p>Тасок нет</p>
