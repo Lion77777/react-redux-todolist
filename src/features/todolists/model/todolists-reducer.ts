@@ -1,5 +1,5 @@
-import type { FilterValues, Todolist } from '../TodolistItem'
 import { createAction, createReducer, nanoid } from '@reduxjs/toolkit'
+import type { FilterValues, Todolist } from '../ui/Todolists/TodolistItem/TodolistItem'
 
 const initialState: Todolist[] = []
 

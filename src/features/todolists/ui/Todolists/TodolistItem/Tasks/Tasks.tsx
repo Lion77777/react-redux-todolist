@@ -1,8 +1,8 @@
+import { useAppSelector } from "@/common/hooks/useAppSelector"
 import List from "@mui/material/List"
-import { useAppSelector } from "./common/hooks/useAppSelector"
-import { selectTasks } from "./model/tasks-selectors"
-import { Todolist } from "./TodolistItem"
-import { TaskItem } from "./TaskItem"
+import { TaskItem } from "./TaskItem/TaskItem"
+import { Todolist } from "../TodolistItem"
+import { selectTasks } from "@/features/todolists/model/tasks-selectors"
 
 type Props = {
     todolist: Todolist
@@ -26,10 +26,10 @@ export const Tasks = ({ todolist }: Props) => {
             {filteredTasks.length === 0 ? (
                 <p>Тасок нет</p>
             ) : (
-                <List>
+                <List >
                     {filteredTasks.map(task => {
                         return (
-                            <TaskItem task={task} todolistId={id} />
+                            <TaskItem task={task} todolistId={id} key={task.id} />
                         )
                     })}
                 </List>

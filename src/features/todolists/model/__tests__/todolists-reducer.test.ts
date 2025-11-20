@@ -1,13 +1,13 @@
 import {v1} from 'uuid'
 import { beforeEach, expect, test } from 'vitest'
-import type {Todolist} from '../App'
 import {
   changeTodolistFilterAC,
   changeTodolistTitleAC,
   createTodolistAC,
   deleteTodolistAC,
   todolistsReducer
-} from './todolists-reducer'
+} from '../todolists-reducer'
+import { Todolist } from '../../ui/Todolists/TodolistItem/TodolistItem'
 
 let todolistId1: string
 let todolistId2: string

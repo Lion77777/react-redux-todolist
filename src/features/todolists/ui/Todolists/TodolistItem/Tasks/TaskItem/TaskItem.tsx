@@ -1,12 +1,12 @@
-import { EditableSpan } from "./EditableSpan"
-import { useAppDispatch } from "./common/hooks/useAppDispatch"
-import { changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC } from "./model/tasks-reducer"
+import { EditableSpan } from "@/common/components/EditableSpan/EditableSpan"
+import { useAppDispatch } from "@/common/hooks/useAppDispatch"
 import { ChangeEvent } from "react"
-import { getListItemSx } from "./TodolistItem.styles"
 import Checkbox from "@mui/material/Checkbox"
 import IconButton from "@mui/material/IconButton"
 import DeleteIcon from '@mui/icons-material/Delete'
 import ListItem from "@mui/material/ListItem"
+import { getListItemSx } from "./TaskItem.styles"
+import { changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC } from "@/features/todolists/model/tasks-reducer"
 
 type Props = {
     task: Task
@@ -40,7 +40,7 @@ export const TaskItem = ({ task, todolistId }: Props) => {
     }
 
     return (
-        <ListItem key={task.id} sx={getListItemSx(task.isDone)}>
+        <ListItem sx={getListItemSx(task.isDone)}>
             <div>
                 <Checkbox checked={task.isDone} onChange={changeTaskStatus} />
                 <EditableSpan value={task.title} onChange={changeTaskTitle} />
