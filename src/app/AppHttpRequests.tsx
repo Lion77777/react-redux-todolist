@@ -1,11 +1,8 @@
 import { type ChangeEvent, type CSSProperties, useEffect, useState } from 'react'
 import Checkbox from '@mui/material/Checkbox'
 import { CreateItemForm, EditableSpan } from '@/common/components'
-import axios from 'axios'
 import type { BaseResponse } from '@/common/types'
-
-const token = "XXX"
-const apiKey = "XXX"
+import { instance } from '@/common/instance/instance'
 
 export type Todolist = {
   id: string
@@ -19,21 +16,12 @@ export const AppHttpRequests = () => {
   const [tasks, setTasks] = useState<any>({})
 
   useEffect(() => {
-    axios.get<Todolist[]>('https://social-network.samuraijs.com/api/1.1/todo-lists', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+    instance.get<Todolist[]>('/todo-lists')
       .then(res => setTodolists(res.data))
   }, [])
 
   const createTodolist = (title: string) => {
-    axios.post<BaseResponse<{ item: Todolist }>>('https://social-network.samuraijs.com/api/1.1/todo-lists', { title }, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'API-KEY': apiKey
-      }
-    })
+    instance.post<BaseResponse<{ item: Todolist }>>('/todo-lists', { title })
       .then(res => {
         const newTodolist = res.data.data.item
 
@@ -42,12 +30,7 @@ export const AppHttpRequests = () => {
   }
 
   const deleteTodolist = (id: string) => {
-    axios.delete<BaseResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'API-KEY': apiKey
-      }
-    })
+    instance.delete<BaseResponse>(`/todo-lists/${id}`)
       .then(res => {
         const updatedTodolists = todolists.filter(todolist => todolist.id !== id)
 
@@ -56,12 +39,7 @@ export const AppHttpRequests = () => {
   }
 
   const changeTodolistTitle = (id: string, title: string) => {
-    axios.put<BaseResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, { title }, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'API-KEY': apiKey
-      }
-    })
+    instance.put<BaseResponse>(`/todo-lists/${id}`, { title })
       .then(res => {
         const updatedTodolists = todolists.map(todolist => todolist.id === id ? { ...todolist, title } : todolist)
 
