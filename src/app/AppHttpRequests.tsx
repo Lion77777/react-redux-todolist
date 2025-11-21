@@ -1,21 +1,20 @@
 import { type ChangeEvent, type CSSProperties, useEffect, useState } from 'react'
 import Checkbox from '@mui/material/Checkbox'
 import { CreateItemForm, EditableSpan } from '@/common/components'
-import type { BaseResponse } from '@/common/types'
-import { instance } from '@/common/instance/instance'
 import { Todolist } from '@/features/todolists/api/todolistsApi.types'
+import { todolistsApi } from '@/features/todolists/api/todolistsApi'
 
 export const AppHttpRequests = () => {
   const [todolists, setTodolists] = useState<Todolist[]>([])
   const [tasks, setTasks] = useState<any>({})
 
   useEffect(() => {
-    instance.get<Todolist[]>('/todo-lists')
+    todolistsApi.getTodolists()
       .then(res => setTodolists(res.data))
   }, [])
 
   const createTodolist = (title: string) => {
-    instance.post<BaseResponse<{ item: Todolist }>>('/todo-lists', { title })
+    todolistsApi.createTodolist(title)
       .then(res => {
         const newTodolist = res.data.data.item
 
@@ -24,7 +23,7 @@ export const AppHttpRequests = () => {
   }
 
   const deleteTodolist = (id: string) => {
-    instance.delete<BaseResponse>(`/todo-lists/${id}`)
+    todolistsApi.deleteTodolist(id)
       .then(res => {
         const updatedTodolists = todolists.filter(todolist => todolist.id !== id)
 
@@ -33,7 +32,7 @@ export const AppHttpRequests = () => {
   }
 
   const changeTodolistTitle = (id: string, title: string) => {
-    instance.put<BaseResponse>(`/todo-lists/${id}`, { title })
+    todolistsApi.changeTodolistTitle({ id, title })
       .then(res => {
         const updatedTodolists = todolists.map(todolist => todolist.id === id ? { ...todolist, title } : todolist)
 
