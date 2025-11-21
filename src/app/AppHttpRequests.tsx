@@ -5,6 +5,7 @@ import {EditableSpan} from '@/common/components/EditableSpan/EditableSpan'
 import axios from 'axios'
 
 const token = "XXX"
+const apiKey = "XXX"
 
 export type Todolist = {
   id: string
@@ -26,7 +27,15 @@ export const AppHttpRequests = () => {
     .then(res => setTodolists(res.data))
   }, [])
 
-  const createTodolist = (title: string) => {}
+  const createTodolist = (title: string) => {
+    axios.post('https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'API-KEY': apiKey
+      }
+    })
+    .then(res => console.log(res.data))
+  }
 
   const deleteTodolist = (id: string) => {}
 
