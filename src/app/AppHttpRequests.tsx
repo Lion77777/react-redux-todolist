@@ -2,7 +2,7 @@ import { type ChangeEvent, type CSSProperties, useEffect, useState } from 'react
 import Checkbox from '@mui/material/Checkbox'
 import { CreateItemForm, EditableSpan } from '@/common/components'
 import axios from 'axios'
-import { BaseResponse } from '@/common/types/types'
+import type { BaseResponse } from '@/common/types'
 
 const token = "XXX"
 const apiKey = "XXX"
