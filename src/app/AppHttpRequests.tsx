@@ -14,6 +14,18 @@ export type Todolist = {
   order: number
 }
 
+export type FieldError = {
+  error: string
+  field: string
+}
+
+type CreateTodolistResponse = {
+  data: {item: Todolist}
+  resultCode: number
+  messages: string[]
+  fieldsErrors: FieldError[]
+}
+
 export const AppHttpRequests = () => {
   const [todolists, setTodolists] = useState<Todolist[]>([])
   const [tasks, setTasks] = useState<any>({})
@@ -28,13 +40,17 @@ export const AppHttpRequests = () => {
   }, [])
 
   const createTodolist = (title: string) => {
-    axios.post('https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, {
+    axios.post<CreateTodolistResponse>('https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, {
       headers: {
         Authorization: `Bearer ${token}`,
         'API-KEY': apiKey
       }
     })
-    .then(res => console.log(res.data))
+    .then(res => {
+      const newTodolist = res.data.data.item
+
+      setTodolists([newTodolist, ...todolists])
+    })
   }
 
   const deleteTodolist = (id: string) => {}
