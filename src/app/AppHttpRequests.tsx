@@ -6,17 +6,24 @@ import axios from 'axios'
 
 const token = "XXX"
 
+export type Todolist = {
+  id: string
+  title: string
+  addedDate: string
+  order: number
+}
+
 export const AppHttpRequests = () => {
-  const [todolists, setTodolists] = useState<any>([])
+  const [todolists, setTodolists] = useState<Todolist[]>([])
   const [tasks, setTasks] = useState<any>({})
 
   useEffect(() => {
-    axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists', {
+    axios.get<Todolist[]>('https://social-network.samuraijs.com/api/1.1/todo-lists', {
       headers: {
         Authorization: `Bearer ${token}`
       }
     })
-    .then(res => console.log(res.data))
+    .then(res => setTodolists(res.data))
   }, [])
 
   const createTodolist = (title: string) => {}
@@ -36,7 +43,7 @@ export const AppHttpRequests = () => {
   return (
       <div style={{margin: '20px'}}>
         <CreateItemForm onCreateItem={createTodolist}/>
-        {todolists.map((todolist: any) => (
+        {todolists.map((todolist) => (
             <div key={todolist.id} style={container}>
               <div>
                 <EditableSpan value={todolist.title}
