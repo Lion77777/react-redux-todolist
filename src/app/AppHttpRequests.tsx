@@ -3,13 +3,7 @@ import Checkbox from '@mui/material/Checkbox'
 import { CreateItemForm, EditableSpan } from '@/common/components'
 import type { BaseResponse } from '@/common/types'
 import { instance } from '@/common/instance/instance'
-
-export type Todolist = {
-  id: string
-  title: string
-  addedDate: string
-  order: number
-}
+import { Todolist } from '@/features/todolists/api/todolistsApi.types'
 
 export const AppHttpRequests = () => {
   const [todolists, setTodolists] = useState<Todolist[]>([])
