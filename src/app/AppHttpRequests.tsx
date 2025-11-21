@@ -73,7 +73,19 @@ export const AppHttpRequests = () => {
     })
   }
 
-  const changeTodolistTitle = (id: string, title: string) => {}
+  const changeTodolistTitle = (id: string, title: string) => {
+    axios.put(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'API-KEY': apiKey
+      }
+    })
+    .then(res => {
+      const updatedTodolists = todolists.map(todolist => todolist.id === id ? {...todolist, title} : todolist)
+
+      setTodolists(updatedTodolists)
+    })
+  }
 
   const createTask = (todolistId: string, title: string) => {}
 
