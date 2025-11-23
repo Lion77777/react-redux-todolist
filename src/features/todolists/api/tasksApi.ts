@@ -1,5 +1,5 @@
 import { instance } from "@/common/instance/instance"
-import { DomainTask, GetTasksResponse, UpdateTaskModel } from "./tasksApi.types"
+import { DomainTask, GetTasksResponse, UpdateTaskModel, DeleteTask } from "./tasksApi.types"
 import { BaseResponse } from "@/common/types"
 
 export const tasksApi = {
@@ -15,5 +15,10 @@ export const tasksApi = {
         const {todolistId, taskId, task} = payload
 
         return instance.put<BaseResponse<{item: UpdateTaskModel}>>(`/todo-lists/${todolistId}/tasks/${taskId}`, {task})
+    },
+    deleteTask(payload: {todolistId: string, taskId: string}) {
+        const {todolistId, taskId} = payload
+
+        return instance.delete<BaseResponse<{item: DeleteTask}>>(`/todo-lists/${todolistId}/tasks/${taskId}`)
     }
 }
