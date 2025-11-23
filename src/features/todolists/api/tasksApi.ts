@@ -1,7 +1,8 @@
 import { instance } from "@/common/instance/instance"
+import { GetTasksResponse } from "./tasksApi.types"
 
 export const tasksApi = {
     getTasks(todolistId: string) {
-        return instance.get(`/todo-lists/${todolistId}/tasks`)
+        return instance.get<GetTasksResponse>(`/todo-lists/${todolistId}/tasks`)
     }
 }
